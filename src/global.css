@@ -1,0 +1,14 @@
+body {
+  font-family: sans-serif;
+  line-height: 1.5;
+  background-color: #fafafa;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  min-width: 100%;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
