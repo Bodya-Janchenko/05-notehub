@@ -4,6 +4,7 @@ import type { NoteTag } from "../types/note";
 
 axios.defaults.baseURL = "https://notehub-public.goit.study/api";
 const KEY = import.meta.env.VITE_NOTEHUB_TOKEN;
+export const perPage = 12;
 
 interface FetchNotesResponse {
   notes: Note[];
@@ -21,7 +22,7 @@ export const fetchNotes = async (
     params: {
       ...(searchNote !== "" && { search: searchNote }),
       page,
-      perPage: 12,
+      perPage: perPage,
     },
   });
 
