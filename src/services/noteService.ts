@@ -6,7 +6,7 @@ axios.defaults.baseURL = "https://notehub-public.goit.study/api";
 const KEY = import.meta.env.VITE_NOTEHUB_TOKEN;
 export const perPage = 12;
 
-interface FetchNotesResponse {
+export interface FetchNotesResponse {
   notes: Note[];
   totalPages: number;
 }
@@ -15,7 +15,7 @@ export const fetchNotes = async (
   searchNote: string,
   page: number
 ): Promise<FetchNotesResponse> => {
-  const response = await axios<FetchNotesResponse>("/notes", {
+  const response = await axios.get<FetchNotesResponse>("/notes", {
     headers: {
       Authorization: `Bearer ${KEY}`,
     },
@@ -29,14 +29,14 @@ export const fetchNotes = async (
   return response.data;
 };
 
-interface createNoteProps {
+interface CreateNoteProps {
   title: string;
   content: string;
   tag: NoteTag;
 }
 
-export const createNote = async (newNote: createNoteProps): Promise<Note> => {
-  const response = await axios.post("/notes", newNote, {
+export const createNote = async (newNote: CreateNoteProps): Promise<Note> => {
+  const response = await axios.post<Note>("/notes", newNote, {
     headers: {
       Authorization: `Bearer ${KEY}`,
     },
@@ -44,11 +44,12 @@ export const createNote = async (newNote: createNoteProps): Promise<Note> => {
   return response.data;
 };
 
-export const deleteNote = async (noteId: number) => {
-  const response = await axios.delete(`/notes/${noteId}`, {
+export const deleteNote = async (noteId: number): Promise<Note> => {
+  const response = await axios.delete<Note>(`/notes/${noteId}`, {
     headers: {
       Authorization: `Bearer ${KEY}`,
     },
   });
+  console.log(response.data);
   return response.data;
 };

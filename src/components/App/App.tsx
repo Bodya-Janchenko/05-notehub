@@ -4,26 +4,26 @@ import SearchBox from "../SearchBox/SearchBox";
 import Pagination from "../Pagination/Pagination";
 import NoteList from "../NoteList/NoteList";
 import Modal from "../Modal/Modal";
-import NoteForm from "../NoteForm/NodeForm";
+import NoteForm from "../NoteForm/NoteForm";
 
 import { useState } from "react";
 import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
 import { fetchNotes } from "../../services/noteService";
 import { Toaster } from "react-hot-toast";
+import { keepPreviousData } from "@tanstack/react-query";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isCreatedNote, setIsCreatedNote] = useState<boolean>(false);
 
   const [debounceSearchQuery] = useDebounce(searchQuery, 300);
 
   const { data } = useQuery({
     queryKey: ["notes", debounceSearchQuery, currentPage],
     queryFn: () => fetchNotes(debounceSearchQuery, currentPage),
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 
   const notes = data?.notes ?? [];
@@ -36,10 +36,6 @@ export default function App() {
 
   const toogleModal = () => {
     setIsModalOpen(!isModalOpen);
-  };
-
-  const toogleCreateNote = () => {
-    setIsCreatedNote(!isCreatedNote);
   };
 
   return (
@@ -58,7 +54,7 @@ export default function App() {
           className={css.button}
           onClick={() => {
             toogleModal();
-            toogleCreateNote();
+            // toogleCreateNote();
           }}
         >
           Create Note +
@@ -66,11 +62,10 @@ export default function App() {
       </header>
       {isModalOpen && (
         <Modal onClose={toogleModal}>
-          {isCreatedNote && (
+          {isModalOpen && (
             <NoteForm
               onClose={() => {
                 toogleModal();
-                toogleCreateNote();
               }}
             />
           )}
