@@ -4,7 +4,7 @@ import css from "./NoteForm.module.css";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import type { FormikHelpers } from "formik";
 import * as Yup from "yup";
-import { createNote } from "../../servises/noteService";
+import { createNote } from "../../services/noteService";
 import toast from "react-hot-toast";
 import type { NoteTag } from "../../types/note";
 

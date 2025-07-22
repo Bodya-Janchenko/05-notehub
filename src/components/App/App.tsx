@@ -9,7 +9,7 @@ import NoteForm from "../NoteForm/NodeForm";
 import { useState } from "react";
 import { useDebounce } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
-import { fetchNotes } from "../../servises/noteService";
+import { fetchNotes } from "../../services/noteService";
 import { Toaster } from "react-hot-toast";
 
 export default function App() {
