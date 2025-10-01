@@ -3,9 +3,8 @@ import { createRoot } from "react-dom/client";
 
 import App from "./components/App/App.tsx";
 
-import "./global.css";
 import "modern-normalize";
-import "./index.css";
+import "./global.css";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
