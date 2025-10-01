@@ -1,11 +1,11 @@
 import css from "./App.module.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchNotes } from "../../services/noteService";
 
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import SearchBox from "../SearchBox/SearchBox";
 import Pagination from "../Pagination/Pagination";
 import NoteList from "../NoteList/NoteList";
@@ -19,11 +19,18 @@ const App = () => {
 
   const [debounceSearchQuery] = useDebounce(searchQuery, 300);
 
-  const { data } = useQuery({
+  const { data, isError, error } = useQuery({
     queryKey: ["notes", debounceSearchQuery, currentPage],
     queryFn: () => fetchNotes(debounceSearchQuery, currentPage),
     placeholderData: keepPreviousData,
   });
+
+  useEffect(() => {
+    if (isError && error) {
+      toast.error(`Oops, something went wrong while get the note.`);
+      console.log(`Something went wrong while get the note: ${error}`);
+    }
+  }, [isError, error]);
 
   const notes = data?.notes ?? [];
   const totalPages: number = data?.totalPages ?? 1;
