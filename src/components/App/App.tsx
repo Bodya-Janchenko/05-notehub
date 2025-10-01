@@ -1,4 +1,6 @@
 import css from "./App.module.css";
+import "modern-normalize";
+import "./global.css";
 
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
